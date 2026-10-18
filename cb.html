@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ulanmoqda…</title>
+<style>body{font-family:sans-serif;text-align:center;padding:60px 20px}h1{font-size:26px}</style></head>
+<body><h1 id="t">⏳ Ulanmoqda…</h1><p id="m">Bir soniya kuting.</p>
+<script>
+// Instagram shu sahifaga qaytaradi; bu sahifa foydalanuvchini botning joriy manziliga yo'naltiradi.
+// Manzil `state` ichida keladi (token~host). Faqat ruxsat etilgan domenlarga yo'naltiriladi.
+var ALLOWED = [/^[a-z0-9-]+\.trycloudflare\.com$/];   // o'z domeningiz bo'lsa shu yerga qo'shing, masalan /^bot\.mening-domenim\.uz$/
+var q = new URLSearchParams(location.search);
+var host = ((q.get('state') || '').split('~')[1] || '').toLowerCase();
+function show(t, m) { document.getElementById('t').textContent = t; document.getElementById('m').textContent = m; }
+if (q.get('error') && !host) {
+  show('Ruxsat berilmadi', "Telegram'dagi botga qayting va qayta urinib ko'ring.");
+} else if (ALLOWED.some(function (r) { return r.test(host); })) {
+  location.replace('https://' + host + '/ig/callback' + location.search);
+} else {
+  show('Havola yaroqsiz', "Telegram'dagi botda «Akkaunt ulash» ni qayta bosing.");
+}
+</script></body></html>
